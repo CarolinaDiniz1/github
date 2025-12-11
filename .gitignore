@@ -1,0 +1,77 @@
+# Credenciais e arquivos sensíveis
+.env
+*.env
+*.pem
+*.key
+credentials.json
+
+# Arquivos de rastreamento
+last_post.json
+
+# Logs
+*.log
+logs/
+instagram_autoposter.log
+
+# Arquivos temporários
+temp/
+tmp/
+*.tmp
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Session files
+*.session
+*.json.bak
+
+# Mídia baixada
+downloads/
+media/
+*.jpg
+*.jpeg
+*.png
+*.mp4
+*.mov
+*.avi
+
+# Certificados
+*.crt
+*.cert

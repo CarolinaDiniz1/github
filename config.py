@@ -1,0 +1,20 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Instagram
+INSTAGRAM_USERNAME = os.getenv('INSTAGRAM_USERNAME')
+INSTAGRAM_PASSWORD = os.getenv('INSTAGRAM_PASSWORD')
+
+# LinkedIn
+LINKEDIN_EMAIL = os.getenv('LINKEDIN_EMAIL')
+LINKEDIN_PASSWORD = os.getenv('LINKEDIN_PASSWORD')
+
+# Threads
+THREADS_USERNAME = os.getenv('THREADS_USERNAME', INSTAGRAM_USERNAME)
+THREADS_PASSWORD = os.getenv('THREADS_PASSWORD', INSTAGRAM_PASSWORD)
+
+# Settings
+CHECK_INTERVAL_MINUTES = int(os.getenv('CHECK_INTERVAL_MINUTES', 30))
+LAST_POST_FILE = os.getenv('LAST_POST_FILE', 'last_post.json')
