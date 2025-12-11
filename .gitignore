@@ -4,9 +4,11 @@
 *.pem
 *.key
 credentials.json
+oauth_config.json
 
 # Arquivos de rastreamento
 last_post.json
+test_results.json
 
 # Logs
 *.log

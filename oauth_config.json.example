@@ -1,0 +1,15 @@
+{
+  "linkedin": {
+    "client_id": "seu_client_id_aqui",
+    "client_secret": "seu_client_secret_aqui",
+    "access_token": "token_gerado_automaticamente",
+    "expires_in": 5184000,
+    "refresh_token": "refresh_token_gerado",
+    "scope": "r_emailaddress r_liteprofile w_member_social"
+  },
+  "threads": {
+    "status": "Usando credenciais do Instagram",
+    "method": "instagram_auth",
+    "note": "API oficial em desenvolvimento pela Meta"
+  }
+}
