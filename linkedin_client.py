@@ -92,18 +92,29 @@ class LinkedInClient:
                 return False
 
             logger.info("Postando no LinkedIn (método tradicional)...")
-            logger.warning("AVISO: Para automação completa, configure OAuth:")
+            logger.warning("AVISO: Método tradicional tem limitações. Para melhor resultado, configure OAuth:")
             logger.warning("  python setup_oauth.py")
 
-            # Simulação de post bem-sucedido para fins de demonstração
-            logger.info(f"Post no LinkedIn: {text[:50]}...")
+            # Tenta postar usando a biblioteca linkedin-api
+            try:
+                # A biblioteca linkedin-api não tem método direto de post público
+                # Vamos usar uma abordagem alternativa via share
 
-            if image_path:
-                logger.info(f"Com imagem: {image_path}")
+                logger.info(f"Criando post no LinkedIn: {text[:50]}...")
 
-            # TODO: Implementar post real usando LinkedIn API tradicional
-            # Por enquanto, retorna True para demonstração
-            return True
+                # Como a biblioteca linkedin-api não tem post_share público,
+                # vamos alertar o usuário que precisa configurar OAuth
+                logger.error("❌ ERRO: Método tradicional não suporta postagem automática")
+                logger.error("Por favor, configure OAuth para postar automaticamente:")
+                logger.error("1. Execute: python setup_oauth.py")
+                logger.error("2. Siga as instruções para autorizar a aplicação")
+                logger.error("3. Depois execute o bot novamente")
+
+                return False
+
+            except Exception as e:
+                logger.error(f"Erro ao tentar postar: {e}")
+                return False
 
         except Exception as e:
             logger.error(f"Erro ao postar no LinkedIn: {e}")

@@ -38,25 +38,37 @@ class ThreadsClient:
             bool: True se postou com sucesso
         """
         try:
-            logger.info("Postando texto no Threads...")
+            logger.info("Tentando postar texto no Threads...")
 
-            # O Threads ainda não tem API pública completa
-            # Esta é uma implementação usando métodos alternativos
+            # Tenta postar usando método não oficial
+            # A instagrapi tem suporte experimental ao Threads
 
-            # Método 1: Tentar usar a API não oficial
-            # Nota: Isso pode não funcionar dependendo das restrições do Threads
+            try:
+                # Método 1: Tentar usar post_photo com texto apenas
+                # (Threads funciona de forma similar ao Instagram)
 
-            logger.warning("AVISO: A API do Threads ainda é limitada.")
-            logger.warning("Para postar automaticamente no Threads, você pode:")
-            logger.warning("1. Usar a API oficial quando disponível")
-            logger.warning("2. Usar ferramentas de terceiros como Buffer, Hootsuite")
-            logger.warning("3. Aguardar a Meta liberar APIs públicas completas")
+                logger.info("Postando no Threads...")
+                logger.info(f"Texto: {text[:100]}...")
 
-            # Simulação de post para demonstração
-            logger.info(f"Post no Threads: {text[:50]}...")
+                # IMPORTANTE: A API do Threads ainda está em desenvolvimento
+                # Este método pode não funcionar consistentemente
 
-            # TODO: Implementar quando API oficial estiver disponível
-            return True
+                # Como o Threads não tem API pública completa ainda,
+                # vamos indicar claramente o status
+                logger.warning("⚠️ AVISO: Postagem no Threads está limitada")
+                logger.warning("A Meta ainda não liberou API pública completa do Threads")
+                logger.warning("Opções disponíveis:")
+                logger.warning("1. Aguardar API oficial da Meta")
+                logger.warning("2. Usar ferramentas de terceiros: Buffer, Hootsuite, Later")
+                logger.warning("3. Configurar automação via Instagram (posts aparecem no Threads)")
+
+                # Retorna False para indicar que não conseguiu postar
+                logger.error("❌ Postagem no Threads não disponível no momento")
+                return False
+
+            except Exception as post_error:
+                logger.error(f"Erro ao tentar postar: {post_error}")
+                return False
 
         except Exception as e:
             logger.error(f"Erro ao postar no Threads: {e}")
@@ -74,14 +86,20 @@ class ThreadsClient:
             bool: True se postou com sucesso
         """
         try:
-            logger.info("Postando texto com imagem no Threads...")
+            logger.info("Tentando postar texto com imagem no Threads...")
+            logger.info(f"Texto: {text[:100]}...")
+            logger.info(f"Imagem: {image_path}")
 
-            # Implementação futura quando API estiver disponível
-            logger.info(f"Post no Threads: {text[:50]}...")
-            logger.info(f"Com imagem: {image_path}")
+            # A API do Threads ainda não está disponível
+            logger.warning("⚠️ AVISO: Postagem no Threads está limitada")
+            logger.warning("A Meta ainda não liberou API pública completa do Threads")
+            logger.warning("Opções disponíveis:")
+            logger.warning("1. Aguardar API oficial da Meta")
+            logger.warning("2. Usar ferramentas de terceiros: Buffer, Hootsuite, Later")
+            logger.warning("3. Configurar automação via Instagram (posts aparecem no Threads)")
 
-            # TODO: Implementar quando API oficial estiver disponível
-            return True
+            logger.error("❌ Postagem no Threads não disponível no momento")
+            return False
 
         except Exception as e:
             logger.error(f"Erro ao postar no Threads: {e}")

@@ -66,6 +66,33 @@ class InstagramAutoPoster:
         except Exception as e:
             logger.error(f"Erro ao salvar último post ID: {e}")
 
+    def check_configuration(self):
+        """Verifica e exibe status da configuração"""
+        logger.info("=" * 60)
+        logger.info("VERIFICAÇÃO DE CONFIGURAÇÃO")
+        logger.info("=" * 60)
+
+        # Verifica LinkedIn
+        if os.path.exists('oauth_config.json'):
+            with open('oauth_config.json', 'r') as f:
+                oauth_config = json.load(f)
+                if 'linkedin' in oauth_config and oauth_config['linkedin'].get('access_token'):
+                    logger.info("✓ LinkedIn OAuth configurado")
+                else:
+                    logger.warning("⚠ LinkedIn OAuth NÃO configurado")
+                    logger.warning("  Posts no LinkedIn NÃO funcionarão!")
+                    logger.warning("  Execute: python setup_oauth.py")
+        else:
+            logger.error("✗ LinkedIn NÃO configurado")
+            logger.error("  Execute: python setup_oauth.py")
+
+        # Verifica Threads
+        logger.warning("⚠ Threads: API limitada pela Meta")
+        logger.warning("  Posts no Threads podem NÃO funcionar")
+        logger.warning("  Recomendação: Use ferramentas de terceiros")
+
+        logger.info("=" * 60)
+
     def login_all(self):
         """Faz login em todas as plataformas"""
         logger.info("=== Iniciando logins ===")
@@ -75,14 +102,18 @@ class InstagramAutoPoster:
         threads_ok = self.threads.login()
 
         if not instagram_ok:
-            logger.error("Falha no login do Instagram - processo abortado")
+            logger.error("✗ Falha no login do Instagram - processo abortado")
+            logger.error("Verifique as credenciais no arquivo .env")
             return False
 
         if not linkedin_ok:
-            logger.warning("Falha no login do LinkedIn - posts não serão enviados para o LinkedIn")
+            logger.error("✗ Falha no login do LinkedIn")
+            logger.error("Posts NÃO serão enviados para o LinkedIn")
+            logger.error("Execute: python setup_oauth.py")
 
         if not threads_ok:
-            logger.warning("Falha no login do Threads - posts não serão enviados para o Threads")
+            logger.warning("⚠ Falha no login do Threads")
+            logger.warning("Posts NÃO serão enviados para o Threads")
 
         logger.info("=== Logins concluídos ===")
         return True
@@ -182,8 +213,15 @@ class InstagramAutoPoster:
         """Executa uma verificação única"""
         logger.info("=== MODO: Execução única ===")
 
+        # Verifica configuração primeiro
+        self.check_configuration()
+
         if not self.login_all():
             logger.error("Falha nos logins, encerrando")
+            logger.error("\nPara resolver:")
+            logger.error("1. Verifique o arquivo .env com suas credenciais")
+            logger.error("2. Configure OAuth: python setup_oauth.py")
+            logger.error("3. Teste as conexões: python test_connections.py")
             return
 
         self.check_and_post()
@@ -194,8 +232,15 @@ class InstagramAutoPoster:
         logger.info("=== MODO: Execução agendada ===")
         logger.info(f"Intervalo de verificação: {config.CHECK_INTERVAL_MINUTES} minutos")
 
+        # Verifica configuração primeiro
+        self.check_configuration()
+
         if not self.login_all():
             logger.error("Falha nos logins, encerrando")
+            logger.error("\nPara resolver:")
+            logger.error("1. Verifique o arquivo .env com suas credenciais")
+            logger.error("2. Configure OAuth: python setup_oauth.py")
+            logger.error("3. Teste as conexões: python test_connections.py")
             return
 
         # Agenda a verificação
