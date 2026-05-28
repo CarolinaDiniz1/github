@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LinkedIn Automator</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#0077b5">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+        <span>LinkedIn Automator</span>
+      </div>
+      <div id="status-badge" class="badge badge-idle">Aguardando</div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="connections">Conexões</button>
+      <button class="tab" data-tab="messages">Mensagens</button>
+      <button class="tab" data-tab="posts">Posts</button>
+      <button class="tab" data-tab="extract">Extrair</button>
+      <button class="tab" data-tab="settings">Config</button>
+    </nav>
+
+    <!-- Conexões -->
+    <section class="tab-content active" id="tab-connections">
+      <div class="section">
+        <h3>Enviar Conexões</h3>
+        <div class="form-group">
+          <label>Quantidade máxima</label>
+          <input type="number" id="conn-limit" value="10" min="1" max="50" />
+        </div>
+        <div class="form-group">
+          <label>Mensagem de conexão (opcional)</label>
+          <textarea id="conn-message" placeholder="Olá! Gostaria de me conectar com você..." rows="3"></textarea>
+          <span class="char-count"><span id="conn-char">0</span>/300</span>
+        </div>
+        <div class="form-group">
+          <label>Delay entre ações (segundos)</label>
+          <input type="number" id="conn-delay" value="3" min="1" max="30" />
+        </div>
+        <div class="info-box">
+          <span>Abra uma busca no LinkedIn e clique em Iniciar.</span>
+        </div>
+        <button class="btn btn-primary" id="btn-send-connections">
+          <span class="btn-icon">🔗</span> Enviar Conexões
+        </button>
+        <button class="btn btn-danger hidden" id="btn-stop-connections">
+          <span class="btn-icon">⛔</span> Parar
+        </button>
+      </div>
+      <div class="progress-box hidden" id="conn-progress">
+        <div class="progress-label">Progresso: <span id="conn-done">0</span> / <span id="conn-total">0</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="conn-fill"></div></div>
+        <div class="log-box" id="conn-log"></div>
+      </div>
+    </section>
+
+    <!-- Mensagens -->
+    <section class="tab-content" id="tab-messages">
+      <div class="section">
+        <h3>Enviar Mensagens</h3>
+        <div class="form-group">
+          <label>Mensagem</label>
+          <textarea id="msg-text" placeholder="Olá {nome}, tudo bem? Vi seu perfil e gostaria de..." rows="5"></textarea>
+          <span class="hint">Use {nome} para personalizar com o nome da pessoa.</span>
+        </div>
+        <div class="form-group">
+          <label>Quantidade máxima</label>
+          <input type="number" id="msg-limit" value="10" min="1" max="50" />
+        </div>
+        <div class="form-group">
+          <label>Delay entre mensagens (segundos)</label>
+          <input type="number" id="msg-delay" value="5" min="2" max="60" />
+        </div>
+        <div class="info-box">
+          <span>Abra sua lista de conexões ou uma busca e clique em Iniciar.</span>
+        </div>
+        <button class="btn btn-primary" id="btn-send-messages">
+          <span class="btn-icon">💬</span> Enviar Mensagens
+        </button>
+        <button class="btn btn-danger hidden" id="btn-stop-messages">⛔ Parar</button>
+      </div>
+      <div class="progress-box hidden" id="msg-progress">
+        <div class="progress-label">Progresso: <span id="msg-done">0</span> / <span id="msg-total">0</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="msg-fill"></div></div>
+        <div class="log-box" id="msg-log"></div>
+      </div>
+    </section>
+
+    <!-- Posts -->
+    <section class="tab-content" id="tab-posts">
+      <div class="section">
+        <h3>Interagir com Posts</h3>
+        <div class="form-group">
+          <label>Ação</label>
+          <select id="post-action">
+            <option value="like">Curtir posts</option>
+            <option value="comment">Comentar posts</option>
+            <option value="like-comment">Curtir e Comentar</option>
+          </select>
+        </div>
+        <div class="form-group" id="comment-group">
+          <label>Comentários (um por linha — será selecionado aleatoriamente)</label>
+          <textarea id="post-comments" rows="5" placeholder="Excelente conteúdo!&#10;Muito relevante, obrigado!&#10;Ótima perspectiva!"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Quantidade máxima de posts</label>
+          <input type="number" id="post-limit" value="10" min="1" max="50" />
+        </div>
+        <div class="form-group">
+          <label>Delay entre posts (segundos)</label>
+          <input type="number" id="post-delay" value="4" min="1" max="30" />
+        </div>
+        <div class="info-box">
+          <span>Abra seu feed ou busca de posts e clique em Iniciar.</span>
+        </div>
+        <button class="btn btn-primary" id="btn-interact-posts">
+          <span class="btn-icon">👍</span> Iniciar Interação
+        </button>
+        <button class="btn btn-danger hidden" id="btn-stop-posts">⛔ Parar</button>
+      </div>
+      <div class="progress-box hidden" id="post-progress">
+        <div class="progress-label">Progresso: <span id="post-done">0</span> / <span id="post-total">0</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="post-fill"></div></div>
+        <div class="log-box" id="post-log"></div>
+      </div>
+    </section>
+
+    <!-- Extrair -->
+    <section class="tab-content" id="tab-extract">
+      <div class="section">
+        <h3>Extrair Dados</h3>
+        <div class="form-group">
+          <label>O que extrair</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="ext-name" checked /> Nome</label>
+            <label><input type="checkbox" id="ext-headline" checked /> Cargo/Empresa</label>
+            <label><input type="checkbox" id="ext-location" checked /> Localização</label>
+            <label><input type="checkbox" id="ext-connections" /> Conexões em comum</label>
+            <label><input type="checkbox" id="ext-url" checked /> URL do perfil</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Formato de exportação</label>
+          <select id="ext-format">
+            <option value="csv">CSV</option>
+            <option value="json">JSON</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Limite de perfis</label>
+          <input type="number" id="ext-limit" value="50" min="1" max="500" />
+        </div>
+        <div class="info-box">
+          <span>Abra uma página de busca de pessoas e clique em Extrair.</span>
+        </div>
+        <button class="btn btn-primary" id="btn-extract">
+          <span class="btn-icon">📥</span> Extrair Dados
+        </button>
+        <button class="btn btn-danger hidden" id="btn-stop-extract">⛔ Parar</button>
+        <button class="btn btn-secondary hidden" id="btn-download">
+          <span class="btn-icon">💾</span> Baixar Arquivo
+        </button>
+      </div>
+      <div class="progress-box hidden" id="ext-progress">
+        <div class="progress-label">Extraídos: <span id="ext-done">0</span> / <span id="ext-total">0</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="ext-fill"></div></div>
+        <div class="log-box" id="ext-log"></div>
+      </div>
+      <div id="ext-preview" class="hidden">
+        <h4>Prévia (<span id="ext-count">0</span> perfis)</h4>
+        <div class="table-wrapper">
+          <table id="ext-table">
+            <thead><tr id="ext-thead"></tr></thead>
+            <tbody id="ext-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Configurações -->
+    <section class="tab-content" id="tab-settings">
+      <div class="section">
+        <h3>Configurações Gerais</h3>
+        <div class="form-group">
+          <label>Limite diário de conexões</label>
+          <input type="number" id="daily-conn-limit" value="50" min="1" max="100" />
+          <span class="hint">LinkedIn bloqueia contas com muitas conexões diárias. Recomendado: máx 50.</span>
+        </div>
+        <div class="form-group">
+          <label>Limite diário de mensagens</label>
+          <input type="number" id="daily-msg-limit" value="30" min="1" max="100" />
+        </div>
+        <div class="toggle-group">
+          <label class="toggle-label">
+            <input type="checkbox" id="safe-mode" checked />
+            <span class="toggle-slider"></span>
+            Modo seguro (delays aleatórios)
+          </label>
+        </div>
+        <div class="toggle-group">
+          <label class="toggle-label">
+            <input type="checkbox" id="auto-scroll" checked />
+            <span class="toggle-slider"></span>
+            Scroll automático entre páginas
+          </label>
+        </div>
+        <button class="btn btn-primary" id="btn-save-settings">
+          💾 Salvar Configurações
+        </button>
+
+        <div class="stats-box">
+          <h4>Estatísticas de Hoje</h4>
+          <div class="stat"><span>Conexões enviadas:</span> <strong id="stat-conn">0</strong></div>
+          <div class="stat"><span>Mensagens enviadas:</span> <strong id="stat-msg">0</strong></div>
+          <div class="stat"><span>Posts curtidos:</span> <strong id="stat-likes">0</strong></div>
+          <div class="stat"><span>Comentários feitos:</span> <strong id="stat-comments">0</strong></div>
+          <div class="stat"><span>Perfis extraídos:</span> <strong id="stat-extracted">0</strong></div>
+          <button class="btn btn-small" id="btn-reset-stats">Resetar estatísticas</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
