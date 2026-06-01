@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Configurações - Instagram Pro Tools</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f4f4f8; color: #222; }
+    header { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); color: #fff; padding: 20px 32px; }
+    header h1 { font-size: 20px; }
+    header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+    main { max-width: 700px; margin: 32px auto; padding: 0 16px; }
+    .card { background: #fff; border-radius: 14px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .card h2 { font-size: 15px; margin-bottom: 16px; color: #833ab4; }
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-size: 13px; color: #555; margin-bottom: 6px; font-weight: 500; }
+    input[type="number"], input[type="text"], textarea {
+      width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px;
+      font-size: 14px; outline: none; transition: border 0.2s;
+    }
+    input:focus, textarea:focus { border-color: #833ab4; }
+    textarea { resize: vertical; min-height: 120px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    button {
+      background: linear-gradient(135deg, #833ab4, #fd1d1d);
+      color: #fff; border: none; padding: 12px 28px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+    }
+    #save-msg { margin-top: 10px; color: #4caf50; font-size: 13px; }
+    .warning { background: #fff8e1; border-left: 4px solid #ffc107; padding: 12px 16px; border-radius: 8px; font-size: 13px; color: #555; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📸 Instagram Pro Tools — Configurações Avançadas</h1>
+    <p>Brindes Marcelo & Wagner</p>
+  </header>
+  <main>
+    <div class="warning">
+      ⚠️ <strong>Atenção:</strong> Use valores de delay realistas para evitar bloqueios. Recomendamos no mínimo 30s entre curtidas e 60s entre comentários.
+    </div>
+
+    <div class="card">
+      <h2>⏱ Limites e Delays</h2>
+      <div class="row">
+        <div class="form-group">
+          <label>Delay entre curtidas (seg)</label>
+          <input type="number" id="likeDelay" min="10" max="600" />
+        </div>
+        <div class="form-group">
+          <label>Máx curtidas por hora</label>
+          <input type="number" id="maxLikesPerHour" min="1" max="100" />
+        </div>
+        <div class="form-group">
+          <label>Delay entre comentários (seg)</label>
+          <input type="number" id="commentDelay" min="30" max="3600" />
+        </div>
+        <div class="form-group">
+          <label>Máx comentários por hora</label>
+          <input type="number" id="maxCommentsPerHour" min="1" max="30" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>💬 Banco de Comentários</h2>
+      <div class="form-group">
+        <label>Um comentário por linha (serão usados aleatoriamente)</label>
+        <textarea id="comments" placeholder="Produto incrível! 🎁&#10;Que lindo! 😍&#10;Adoro os brindes de vocês! ✨"></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>#️⃣ Hashtags Alvo</h2>
+      <div class="form-group">
+        <label>Hashtags para monitorar (separadas por vírgula, sem #)</label>
+        <input type="text" id="targetHashtags" placeholder="brindes, brindesempresariais, brindesersonalizados" />
+      </div>
+    </div>
+
+    <button id="btn-save">💾 Salvar Configurações</button>
+    <div id="save-msg"></div>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>

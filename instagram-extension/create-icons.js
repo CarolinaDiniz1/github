@@ -1,0 +1,29 @@
+// Run with: node create-icons.js
+// Requires: npm install canvas
+// Or use any image editor to create PNG icons from the gradient
+
+const sizes = [16, 32, 48, 128];
+const fs = require("fs");
+
+// Minimal SVG icon for the extension
+const svg = (size) => `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#833ab4"/>
+      <stop offset="50%" style="stop-color:#fd1d1d"/>
+      <stop offset="100%" style="stop-color:#fcb045"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="22" fill="url(#g)"/>
+  <text x="50" y="68" font-size="55" text-anchor="middle" fill="white">📸</text>
+</svg>`;
+
+sizes.forEach(size => {
+  fs.writeFileSync(`src/icons/icon${size}.svg`, svg(size));
+  console.log(`Created icon${size}.svg`);
+});
+
+console.log("\nConvert SVG to PNG using:");
+console.log("  - Inkscape: inkscape icon48.svg -o icon48.png -w 48 -h 48");
+console.log("  - ImageMagick: convert icon48.svg icon48.png");
+console.log("  - Or use an online converter like svgtopng.com");

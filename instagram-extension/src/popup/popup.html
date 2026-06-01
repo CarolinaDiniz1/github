@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Instagram Pro Tools</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">📸 Instagram Pro Tools</div>
+    <div class="brand">Brindes M&W</div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="dashboard">Dashboard</button>
+    <button class="tab" data-tab="automation">Automação</button>
+    <button class="tab" data-tab="leads">Leads</button>
+  </nav>
+
+  <!-- DASHBOARD -->
+  <section id="tab-dashboard" class="tab-content active">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">❤️</div>
+        <div class="stat-value" id="stat-likes">0</div>
+        <div class="stat-label">Curtidas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💬</div>
+        <div class="stat-value" id="stat-comments">0</div>
+        <div class="stat-label">Comentários</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">👤</div>
+        <div class="stat-value" id="stat-follows">0</div>
+        <div class="stat-label">Seguidores</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-value" id="stat-leads">0</div>
+        <div class="stat-label">Leads</div>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <h3>Ações Rápidas</h3>
+      <button id="btn-open-ig" class="btn btn-primary">Abrir Instagram</button>
+      <button id="btn-reset-stats" class="btn btn-secondary">Zerar Estatísticas</button>
+    </div>
+  </section>
+
+  <!-- AUTOMATION -->
+  <section id="tab-automation" class="tab-content">
+    <div class="form-group">
+      <label class="toggle-label">
+        <span>Auto Curtidas</span>
+        <input type="checkbox" id="autoLike" />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="form-group indent" id="group-like-delay">
+      <label>Delay entre curtidas (seg)</label>
+      <input type="number" id="likeDelay" min="10" max="300" value="30" />
+      <label>Máx curtidas/hora</label>
+      <input type="number" id="maxLikesPerHour" min="1" max="100" value="50" />
+    </div>
+
+    <div class="form-group">
+      <label class="toggle-label">
+        <span>Auto Comentários</span>
+        <input type="checkbox" id="autoComment" />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="form-group indent" id="group-comment-delay">
+      <label>Delay entre comentários (seg)</label>
+      <input type="number" id="commentDelay" min="30" max="600" value="60" />
+      <label>Máx comentários/hora</label>
+      <input type="number" id="maxCommentsPerHour" min="1" max="30" value="10" />
+    </div>
+
+    <div class="form-group">
+      <label class="toggle-label">
+        <span>Coletar Leads</span>
+        <input type="checkbox" id="collectLeads" />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label>Comentários Automáticos (um por linha)</label>
+      <textarea id="comments" rows="5" placeholder="Um comentário por linha..."></textarea>
+    </div>
+
+    <button id="btn-save" class="btn btn-primary full">💾 Salvar Configurações</button>
+    <div id="save-status" class="save-status"></div>
+  </section>
+
+  <!-- LEADS -->
+  <section id="tab-leads" class="tab-content">
+    <div class="leads-header">
+      <span id="leads-count">0 leads capturados</span>
+      <div class="leads-actions">
+        <button id="btn-export" class="btn btn-small btn-primary">⬇ CSV</button>
+        <button id="btn-clear-leads" class="btn btn-small btn-danger">🗑 Limpar</button>
+      </div>
+    </div>
+    <div id="leads-list" class="leads-list"></div>
+  </section>
+
+  <script src="popup.js"></script>
+</body>
+</html>
